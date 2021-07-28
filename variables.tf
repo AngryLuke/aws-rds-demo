@@ -25,7 +25,7 @@ variable "resource_ttl" {
 variable "db_user" {
   description = "RDS root user name"
   type        = string
-  default     = "aws-demo-user"
+  default     = "demouser"
 }
 
 variable "db_password" {
