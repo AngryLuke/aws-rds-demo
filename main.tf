@@ -16,9 +16,9 @@ data "terraform_remote_state" "network" {
   backend = "remote"
 
   config = {
-    organization = "lbolli-demos"
+    organization = "emea-se-playground-2019"
     workspaces = {
-      name = "aws-network"
+          name = "lbolli-demo-aws-network"
     }
   }
 }
