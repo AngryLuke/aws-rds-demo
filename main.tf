@@ -46,6 +46,7 @@ resource "aws_db_instance" "demo" {
   parameter_group_name   = aws_db_parameter_group.demo.name
   publicly_accessible    = false
   skip_final_snapshot    = true
+  backup_retention_period   = 1
 
   tags = {
     Name    = "rds-postgres-${var.project_name}"
