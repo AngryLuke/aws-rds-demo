@@ -78,21 +78,21 @@ resource "aws_db_parameter_group" "demo" {
   }
 }
 
-resource "aws_db_instance" "demo_replica" {
-  name                      = "rds-postgres-replica-${var.project_name}"
-  identifier                = "rds-postgres-replica-${var.project_name}"
-  replicate_source_db       = aws_db_instance.demo.identifier
-  instance_class            = "db.t3.micro"
-  apply_immediately         = true
-  publicly_accessible       = false
-  skip_final_snapshot       = true
-  vpc_security_group_ids    = data.terraform_remote_state.network.outputs.db_security_group_ids
-  parameter_group_name      = aws_db_parameter_group.demo.name
+// resource "aws_db_instance" "demo_replica" {
+//   name                      = "rds-postgres-replica-${var.project_name}"
+//   identifier                = "rds-postgres-replica-${var.project_name}"
+//   replicate_source_db       = aws_db_instance.demo.identifier
+//   instance_class            = "db.t3.micro"
+//   apply_immediately         = true
+//   publicly_accessible       = false
+//   skip_final_snapshot       = true
+//   vpc_security_group_ids    = data.terraform_remote_state.network.outputs.db_security_group_ids
+//   parameter_group_name      = aws_db_parameter_group.demo.name
 
-  tags = {
-    Name    = "rds-postgres-replica-${var.project_name}"
-    Project = var.project_name
-    Owner   = var.owner
-    TTL     = var.resource_ttl
-  }
-}
+//   tags = {
+//     Name    = "rds-postgres-replica-${var.project_name}"
+//     Project = var.project_name
+//     Owner   = var.owner
+//     TTL     = var.resource_ttl
+//   }
+// }
