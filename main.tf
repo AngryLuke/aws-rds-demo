@@ -33,20 +33,20 @@ resource "random_pet" "name" {}
 
 
 resource "aws_db_instance" "demo" {
-  identifier             = "rds-postgres-${var.project_name}"
-  instance_class         = "db.t3.micro"
-  allocated_storage      = 5
-  max_allocated_storage  = 25
-  engine                 = "postgres"
-  engine_version         = "13.1"
-  username               = var.db_user
-  password               = var.db_password
-  db_subnet_group_name   = aws_db_subnet_group.demo.name
-  vpc_security_group_ids = data.terraform_remote_state.network.outputs.db_security_group_ids
-  parameter_group_name   = aws_db_parameter_group.demo.name
-  publicly_accessible    = false
-  skip_final_snapshot    = true
-  backup_retention_period   = 1
+  identifier                = "rds-postgres-${var.project_name}"
+  instance_class            = "db.t3.micro"
+  allocated_storage         = 5
+  max_allocated_storage     = 25
+  backup_retention_period   = 5
+  engine                    = "postgres"
+  engine_version            = "13.1"
+  username                  = var.db_user
+  password                  = var.db_password
+  db_subnet_group_name      = aws_db_subnet_group.demo.name
+  vpc_security_group_ids    = data.terraform_remote_state.network.outputs.db_security_group_ids
+  parameter_group_name      = aws_db_parameter_group.demo.name
+  publicly_accessible       = false
+  skip_final_snapshot       = true
 
   tags = {
     Name    = "rds-postgres-${var.project_name}"
@@ -79,15 +79,15 @@ resource "aws_db_parameter_group" "demo" {
 }
 
 resource "aws_db_instance" "demo_replica" {
-  name                   = "rds-postgres-replica-${var.project_name}"
-  identifier             = "demo-replica"
-  replicate_source_db    = aws_db_instance.demo.identifier
-  instance_class         = "db.t3.micro"
-  apply_immediately      = true
-  publicly_accessible    = false
-  skip_final_snapshot    = true
-  vpc_security_group_ids = data.terraform_remote_state.network.outputs.db_security_group_ids
-  parameter_group_name   = aws_db_parameter_group.demo.name
+  name                      = "rds-postgres-replica-${var.project_name}"
+  identifier                = "rds-postgres-replica-${var.project_name}"
+  replicate_source_db       = aws_db_instance.demo.identifier
+  instance_class            = "db.t3.micro"
+  apply_immediately         = true
+  publicly_accessible       = false
+  skip_final_snapshot       = true
+  vpc_security_group_ids    = data.terraform_remote_state.network.outputs.db_security_group_ids
+  parameter_group_name      = aws_db_parameter_group.demo.name
 
   tags = {
     Name    = "rds-postgres-replica-${var.project_name}"
