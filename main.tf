@@ -33,6 +33,7 @@ resource "random_pet" "name" {}
 
 
 resource "aws_db_instance" "demo" {
+  count = data.terraform_remote_state.network.outputs.enable_database_network ? 1 : 0
   identifier                = "rds-postgres-${var.project_name}"
   instance_class            = "db.t3.micro"
   allocated_storage         = 5
@@ -57,6 +58,7 @@ resource "aws_db_instance" "demo" {
 }
 
 resource "aws_db_subnet_group" "demo" {
+  count = data.terraform_remote_state.network.outputs.enable_database_network ? 1 : 0
   name       = "rds-subnet-group-${var.project_name}"
   subnet_ids = data.terraform_remote_state.network.outputs.private_database_subnet_ids
 
@@ -69,6 +71,7 @@ resource "aws_db_subnet_group" "demo" {
 }
 
 resource "aws_db_parameter_group" "demo" {
+  count = data.terraform_remote_state.network.outputs.enable_database_network ? 1 : 0
   name   = "aws-demo-${var.project_name}"
   family = "postgres13"
 
@@ -79,6 +82,7 @@ resource "aws_db_parameter_group" "demo" {
 }
 
 // resource "aws_db_instance" "demo_replica" {
+//  count = data.terraform_remote_state.network.outputs.enable_database_network ? 1 : 0
 //   name                      = "rds-postgres-replica-${var.project_name}"
 //   identifier                = "rds-postgres-replica-${var.project_name}"
 //   replicate_source_db       = aws_db_instance.demo.identifier
