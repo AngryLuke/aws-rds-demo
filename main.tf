@@ -43,9 +43,9 @@ resource "aws_db_instance" "demo" {
   engine_version            = "13.1"
   username                  = var.db_user
   password                  = var.db_password
-  db_subnet_group_name      = aws_db_subnet_group.demo.name
+  db_subnet_group_name      = aws_db_subnet_group.demo[count.index].name
   vpc_security_group_ids    = data.terraform_remote_state.network.outputs.db_security_group_ids
-  parameter_group_name      = aws_db_parameter_group.demo.name
+  parameter_group_name      = aws_db_parameter_group.demo[count.index].name
   publicly_accessible       = false
   skip_final_snapshot       = true
 
